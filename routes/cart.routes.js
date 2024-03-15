@@ -7,13 +7,12 @@ router.post('/', async (req, res) => {
     try {
         const data = await CartModel.findOne({ product: req.body.product });
         if (data) {
-            return res.status(202).json({ message: 'Product already in cart' });
+            return res.status(202).json({ message: 'Product Already In Cart' });
         }
         const result = await CartModel.create(req.body);
-        res.status(201).json({ data: result, message: 'Item added to cart!..' });
+        res.status(201).json({ data: result, message: 'Item Added To Cart' });
     } catch (error) {
         console.error(error);
-        console.log(error?.message)
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
