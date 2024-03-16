@@ -15,7 +15,12 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
     try {
-        const data = await Product.find();
+        let query = {};
+        const { category } = req.query;
+        if (category) {
+            query.category = category
+        }
+        const data = await Product.find(query);
         res.status(200).json(data);
     } catch (error) {
         console.error(error);
@@ -43,7 +48,7 @@ router.put('/:id', async (req, res) => {
 
         const { id } = req.params;
 
-        
+
         const existingdocument = await Product.findOne({ _id: id });
         if (!existingdocument) {
             res.status(400).json({ msg: 'document not found' })
